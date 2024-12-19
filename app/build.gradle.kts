@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.dagger.hilt.android") version libs.versions.hiltAndroid apply false
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
