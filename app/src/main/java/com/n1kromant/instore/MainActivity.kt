@@ -49,8 +49,7 @@ class MainActivity : AppCompatActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-//                        BottomAppBar {  }
-                        BottomNavigationBar(mainViewModel, navController)
+                        BottomNavigationBar(mainViewModel)
                     }
                 ) { innerPadding ->
                     val modifier = Modifier.padding(innerPadding)
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun BottomNavigationBar(viewModel: MainModelViewIntent, navController: NavController) {
+fun BottomNavigationBar(viewModel: MainModelViewIntent) {
     val page by viewModel.currentPage.collectAsState()
 
     NavigationBar {
