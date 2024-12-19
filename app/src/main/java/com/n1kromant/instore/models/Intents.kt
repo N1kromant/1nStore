@@ -11,5 +11,5 @@ class ChangeCartIntent(
 class BuyCartIntent: Intent()
 
 class ChangePageIntent(
-    page: Int
+    val page: Int
 ): Intent()

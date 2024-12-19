@@ -1,5 +1,7 @@
 package com.n1kromant.instore.ViewModels
 
+import androidx.lifecycle.ViewModel
+import com.n1kromant.instore.STORE_PAGE
 import com.n1kromant.instore.models.BuyCartIntent
 import com.n1kromant.instore.models.CartData
 import com.n1kromant.instore.models.ChangeCartIntent
@@ -7,6 +9,7 @@ import com.n1kromant.instore.models.ChangeCartIntentTypes
 import com.n1kromant.instore.models.ChangePageIntent
 import com.n1kromant.instore.models.Intent
 import com.n1kromant.instore.models.MVI
+//import com.n1kromant.instore.models.MVI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +20,8 @@ class MainModelViewIntent @Inject constructor(): MVI() {
     private var _cartData: MutableStateFlow<CartData> = MutableStateFlow(CartData(mutableListOf()))
     val cartData: StateFlow<CartData> = _cartData
 
+    private var _currentPage: MutableStateFlow<Int> = MutableStateFlow(STORE_PAGE)
+    val currentPage: StateFlow<Int> = _currentPage
 
     override fun newIntent(intent: Intent) {
         when(intent) {
@@ -51,22 +56,18 @@ class MainModelViewIntent @Inject constructor(): MVI() {
                 }
             }
             ChangeCartIntentTypes.RemoveAllItems -> {
-                val existingItem = _cartData.value.items.find { it[0] == intent.id }
-
-                if (existingItem != null) {
-                    _cartData.value.items.remove(existingItem)
-                    _cartData.value = _cartData.value.copy()
-                }
+                _cartData.value = CartData(mutableListOf())
             }
         }
     }
 
     private fun changePageIntent(intent: ChangePageIntent) {
-        TODO("Not yet implemented")
+        _currentPage.value = intent.page
     }
 
     private fun buyCartIntent(intent: BuyCartIntent) {
-        TODO("Not yet implemented")
+        //FIXME("Отправка в бд")
+        newIntent(ChangeCartIntent(id = 0, 0, ChangeCartIntentTypes.RemoveAllItems,))
     }
 }
 
